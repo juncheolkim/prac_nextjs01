@@ -1,0 +1,13 @@
+/* 모든 페이지에 적용되는 css 템플릿 */
+body {
+    margin: 0;
+    background: #303030;
+    color: white;
+}
+.title {
+    text-align: center;
+    margin-top: 150px;
+}
+.title-sub {
+    text-align: center;
+}
