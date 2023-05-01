@@ -1,51 +1,43 @@
-// './' - 현재폴더
-// './../' - 현재 폴더의 상위폴더
 import { age, name } from "./data";
 import Hello from "./hello";
 
 export default function Cart() {
+    let 장바구니 = ["Tomatos", "Pasta"];
     return (
         <div>
             <Hello />
             <h4 className="title">Cart</h4>
-            {/* 길고 복잡한 html을 한 단어로 축약하려면 Component */}
-            <CartItem />
+            {장바구니.map((src, idx) => {
+                return <CartItem item={장바구니[idx]} />;
+            })}
+            <Btn btnColor="blue" />
+            <Banner cardName="롯데카드" />
+            <Banner cardName="현대카드" />
         </div>
     );
 }
 
-// Component를 만드는 법
-// 1. function 작명(){} - 작명 대문자로 시작
-// 2. return (축약할 긴 HTML)
-function CartItem() {
+// props 문법으로 부모 -> 자식 데이터 전송하려면
+// 1. 자식컴포넌트 사용하는 곳에 가서 <자식컴포넌트 item={전해줄데이터} />
+// 2. 자식컴포넌트 정의부분으로 가서 props라는 파라미터 등록 후 props.item 사용
+
+function CartItem(props) {
     return (
         <div className="cart-item">
-            <p>상품명 {age}</p>
+            <p>{props.item}</p>
             <p>$40</p>
             <p>1개</p>
         </div>
     );
 }
-// Component가 많아지면 단점도 생긴다.
-// Component끼리 데이터 공유가 힘들다. - 코드가 복잡해진다.
-// function 문법 쓰는 이유 === component 문법 쓰는 이유 :
-// 1. 더러운 코드 한 단어로 축약
-// 2. 같은 코드 재사용
+// 자식 -> 부모 데이터 전송 불가능
+// 형제 태그에 데이터 전송 불가능
+// 항상 부모에서 자식에게로만 데이터 전송 가능!
 
-// Next.js 컴포넌트는 2가지 종류가 있다.
-// 1. server component
-// 2. client component
-// 파일 맨 위에 'use client' 넣고 만들면 client component
-// 그 외는 server component이다.
+function Banner(props) {
+    return <h5 className="title-sub">{props.cardName} 결제 행사중</h5>;
+}
 
-// server component
-// - html에 자바스크립트 기능 넣기 불가능 - onClick 등 사용 불가능
-// 장점이 뭐임?
-// - 로딩 속도가 매우 빠르다.
-// client component의 단점은?
-// - 로딩속도 느리다(자바스크립트 많이 필요)
-// - 로딩속도 느리다(hydration 필요)
-
-// 추천하는 컴포넌트 설계 :
-// 큰 페이지는 server component
-// JS기능 필요한 곳만 client component
+function Btn(props) {
+    return <button style={{ backgroundColor: props.btnColor }}>버튼</button>;
+}
